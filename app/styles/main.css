@@ -1,0 +1,38 @@
+* {
+    margin:0;
+    padding:0;
+}
+
+.streamSearch {
+    cursor:pointer;
+    color:white;
+}
+.mainContainer {
+    color: white;
+    background: rgba(0,0,0,0.75);
+    border-radius: 5px;
+    position:relative;
+}
+.mainContainer > input {
+    color:black;
+}
+.streamContainer {
+    text-align:right;
+    background:rgba(0,0,0,0.8);
+    width: 620px;
+    position:relative;
+    border-radius:5px 5px 0 0;
+    height:398px;
+}
+.chatContainer {
+    background: rgba(0,0,0,0.8);
+    min-width: 500px;
+    min-height: 300px;
+    position:relative;
+    border-radius: 5px;
+}
+.table {
+    -webkit-box-shadow: inset 0px 0px 21px 0px rgba(255, 255, 255, 0.75);
+    -moz-box-shadow:    inset 0px 0px 21px 0px rgba(255, 255, 255, 0.75);
+    box-shadow:         inset 0px 0px 21px 0px rgba(255, 255, 255, 0.75);
+}

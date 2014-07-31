@@ -1,0 +1,68 @@
+<div id="state1" class="col-xs-4 mainContainer draggable windows">
+    <a href="#" style="position:absolute;left:5px;top:2px;color:white;" ng-click="miniMize()"><i class="glyphicon glyphicon-minus"></i></a>
+    <a href="#" style="position:absolute;right:25px;top:2px;color:white;" class="handle"><i class="glyphicon glyphicon-move"></i></a>
+    <a href="#" ng-click="channelStarted = false" style="color:white;padding: 2px;position:absolute;right:0;"><i class="glyphicon glyphicon-remove-circle"></i></a>
+
+    <h4 style="text-align:center;cursor:pointer;">Twitchy Wolf</h4>
+    <img src="http://ttv-api.s3.amazonaws.com/assets/connect_dark.png" class="twitch-connect" href="#" />
+    <a class="twitch-logout" href="#">Log out</a>
+    <br />
+    <input type="text" name="streams" ng-change="queryStreams(stream)" ng-model="stream.search" placeholder="Search Streams">
+    <i ng-show="loadingStreams" style="font-size:1.2em" class="fa fa-spinner fa-spin"></i>
+    <div class="" style="max-height: 500px;overflow-y:scroll;">
+        <table class="table" ng-show="streams.length > 0">
+            <tr class="streamSearch" ng-repeat="stream in streams" ng-click="playVideo(stream)">
+                <td>
+                    {{stream.game}}
+                </td>
+                <td>
+                    {{stream.viewers}}
+                </td>
+                <td>
+                    {{stream.channel.name}}
+                </td>
+                <td>
+                    <img ng-src="{{stream.preview.small}}" alt="{{stream.game}}" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- <div ng-repeat="stream in streams">
+        <p>game: {{stream.game}} viewers: {{stream.viewers}} name: {{stream.channel.display_name}}</p>
+    </div> -->
+
+
+    <br>
+    <!-- <input type="TEXT" name="channel" ng-change="queryChannel(channel)" ng-model="channel.name" placeholder="Channel Name">
+    <p>
+        Name: {{channelInfo.stream.channel.display_name}}
+    </p>
+    <p>
+        Game: {{channelInfo.stream.game}}
+    </p>
+    <p>
+        Viewers: {{channelInfo.stream.viewers}}
+    </p>
+    <p>
+
+    </p>
+    <img ng-src="{{channelInfo.stream.preview.medium}}" alt="" /> -->
+
+
+<!-- Chat Room -->
+      <!-- <iframe frameborder="0" scrolling="yes" id="chat_embed" src="http://twitch.tv/chat/embed?channel=sutter_kane&amp;popout_chat=true" height="500" width="350"></iframe> -->
+</div>
+<div ng-show="channelStarted" class="draggable windows streamContainer">
+    <a href="#" style="position:absolute;left:5px;top:1px;color:white;" ng-click="streamCollapse = !streamCollapse"><i class="glyphicon glyphicon-minus"></i></a>
+    <a href="#" style="position:absolute;right:25px;top:1px;color:white;" class="handle"><i class="glyphicon glyphicon-move"></i></a>
+    <a href="#" ng-click="channelStarted = false" style="color:white;padding: 2px;"><i class="glyphicon glyphicon-remove-circle"></i></a>
+
+    <div ng-if="channelStarted">
+        <div collapse="streamCollapse">
+            <stream channel-name="channelName" style="position:absolute;top:20px;left:0;"></stream>
+        </div>
+    </div>
+</div>
+<!-- <div ng-if="channelStarted" class="draggable windows chatContainer">
+    <a href="#" style="position:absolute;right:25px;top:1px;color:white;" class="handle"><i class="glyphicon glyphicon-move"></i></a>
+</div> -->
