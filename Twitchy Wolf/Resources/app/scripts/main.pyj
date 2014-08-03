@@ -1,0 +1,160 @@
+'use strict'
+
+myApp = angular.module('twitchyApp', [
+    'ui.router',
+    'ui.bootstrap',
+    'angularjs.media.directives'
+])
+.config(def($stateProvider, $urlRouterProvider):
+    $urlRouterProvider.otherwise("/")
+
+    $stateProvider
+    .state('main', {
+        url: "/",
+        templateUrl: "app/partials/main.html",
+        controller: 'MainCtrl'
+    })
+    .state('stream', {
+        url: "/stream",
+        templateUrl: 'app/partials/directives/stream.html',
+        controller: 'StreamCtrl'
+    })
+    .state('mychat', {
+        url: "/mychat",
+        templateUrl: 'app/partials/directives/chat.html',
+        controller: 'ChatCtrl'
+    })
+)
+# ***********
+# controllers
+# ***********
+.controller('StreamCtrl', def($scope, $http, $rootScope):
+    $scope.l = ''
+)
+.controller('MainCtrl', def($scope, $http, $rootScope, $window, $timeout):
+
+
+    url = 'https://api.twitch.tv/kraken/'
+
+    clientId = 'jmauht7mi0ud0hptf0l8060uqe41ybw'
+    $scope.channel  = {}
+    $scope.channelStarted = false
+    $scope.chatStarted = false
+    $scope.loadingStreams = false
+    $scope.searchCollapsed = true
+    $scope.userChannel = []
+    $scope.stream = {}
+    $scope.stream.width = 620
+    $scope.stream.height = 378
+    defaultAccount = {
+        name: 'Twitch Account'
+    }
+    $scope.user = defaultAccount
+
+    Twitch.init({clientId: clientId}, def(error, status):
+        if error:
+            print(error)
+
+        if status.authenticated:
+            $('.twitch-connect').hide()
+            $('.twitch-logout').show()
+            $rootScope.token = status.token
+        else:
+            $('.twitch-logout').hide()
+    )
+    Twitch.api({method: 'user'}, def(error, user):
+        $scope.$apply(def():
+            $scope.user = user
+        )
+    )
+
+    # Bring window to front
+    def bringFront (elem, stack):
+        group = $(stack)
+
+        if len(group) < 1:
+            return
+
+        min = parseInt(group[0].style.zIndex, 10) or 0
+        $(group).each(def(i):
+            this.style.zIndex = min+1
+        )
+
+        if elem is undefined:
+            return
+        $(elem).css({'zIndex': min + len(group)})
+
+    $scope.openMyChat = def():
+        if $scope.user.display_name is undefined:
+            alert('You must log in')
+        else:
+            window.user = $scope.user
+            chatPopup = $window.open('#/mychat',$scope.user.name, "height=500, width=350")
+
+    $scope.miniMize = def():
+        if $scope.streams:
+            $scope.streams = {}
+            $scope.stream.search = ''
+
+    # make elements draggable by the handle
+    $('.draggable').draggable({handle: '.handle', stack: '.windows', snap: true, containment: 'document', iframeFix:true, opacity: 0.7, snapTolerance: 10, snapMode: 'outer'}).click(def():
+        bringFront($(this), '.windows')
+    ).css("position", "absolute");
+    $( ".resizable" ).resizable();
+
+    $scope.currentStream = {}
+    def startStream():
+        window.channelName    = $scope.currentStream.channel.display_name
+        streamPopup = $window.open('#/stream', '', "height=378, width=620")
+
+
+    # Play selected video
+    $scope.playVideo = def(stream):
+        $scope.currentStream = stream
+        startStream(stream)
+
+    # search stream for 'like' terms
+    $scope.queryStreams = def(stream):
+        if (stream.search is ''):
+            $scope.streams = {}
+        else:
+            $scope.loadingStreams = true
+            $http.jsonp(url+'search/streams?callback=JSON_CALLBACK', {params: {q:stream.search,type:'suggest'}}).success(def(res):
+                for stream in res.streams:
+                    print(stream.preview.medium)
+                    stream.preview.template = stream.preview.template.replace('{width}', 200)
+                    stream.preview.template = stream.preview.template.replace('{height}', 125)
+                $scope.streams = res.streams
+                $scope.loadingStreams = false
+            )
+
+    # search for a channel
+    $scope.queryChannel = def(channel):
+        $http.jsonp(url+'streams/'+channel.name.toLowerCase()+'?callback=JSON_CALLBACK&client_id='+$scope.clientId)
+        .success(def(res):
+            $scope.channelInfo = res
+        )
+
+    $scope.logout = def():
+        $scope.chatStarted = false
+        Twitch.logout(def(error):
+            if error:
+                print(error)
+            $scope.user = defaultAccount
+            $('.twitch-connect').show()
+            $('.twitch-logout').hide()
+        )
+)
+.controller('StreamCtrl', def($scope, $http, $rootScope):
+    $scope.channelName = window.opener.channelName
+    $scope.stream = {
+        width: 620,
+        height: 378
+    }
+)
+.controller('ChatCtrl', def($scope, $http):
+    $scope.user = window.opener.user
+)
+# **********
+# directives
+# **********

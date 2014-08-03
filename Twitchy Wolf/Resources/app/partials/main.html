@@ -1,0 +1,55 @@
+<div>
+    <div id="state1" class="mainContainer draggable windows">
+        <a href="#" style="position:absolute;left:5px;top:2px;color:white;" ng-click="miniMize()"><i class="glyphicon glyphicon-minus"></i></a>
+        <!-- <a href="#" style="position:absolute;right:25px;top:2px;color:white;" class="handle"><i class="glyphicon glyphicon-move"></i></a> -->
+        <a href="#" ng-click="channelStarted = false" style="color:white;padding: 2px;position:absolute;right:0;"><i class="glyphicon glyphicon-remove-circle"></i></a>
+        <h4 style="text-align:center;cursor:pointer; color:#B9A3E3;" class="handle">Twitchy Wolf</h4>
+
+        <div id="menu">
+
+            <!-- Menu Header -->
+            <span class="menuHeader">{{user.name}}
+                <span class="menuIcons">
+                    <i class="fa fa-gears pointer"></i>
+                    <a href="https://api.twitch.tv/kraken/oauth2/authorize?response_type=token&client_id=jmauht7mi0ud0hptf0l8060uqe41ybw&redirect_uri=http://localhost/&scope=user_read"><i class="fa fa-sign-in twitch-connect pointer"></i></a>
+                    &nbsp; <i ng-click="logout()" class="fa fa-sign-out twitch-logout pointer"></i>
+                </span>
+            </span>
+
+            <!-- Button1 -->
+            <span class="menuButton pointer" ng-click="openMyChat()">Chat Room</span>
+
+        </div>
+        <br />
+
+
+        <div id="streams" style="width: 555px;position:absolute;top:30px;left:200px;">
+            <input type="text" name="streams" class="" ng-change="queryStreams(stream)" ng-model="stream.search" placeholder="Search Streams">
+            <i ng-show="loadingStreams" style="font-size:1.2em" class="fa fa-spinner fa-spin"></i>
+            <div class="col-sm-12" style="height: 400px;overflow-y:scroll;">
+                <div  ng-repeat="stream in streams" ng-click="playVideo(stream)">
+                    <div class="col-sm-6">
+                        <img class="col-sm-8" ng-src="{{stream.preview.template}}" alt="{{stream.game}}" />
+                        <div class="col-sm-4">
+                            <p style="font-weight:bold;">{{stream.game}}</p>
+                            <p>Streamer: {{stream.channel.name}}</p>
+                            <p>Viewers: {{stream.viewers}}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- <table class="table" ng-show="streams.length > 0">
+                    <tr class="streamSearch" ng-repeat="stream in streams" ng-click="playVideo(stream)">
+                        <td>
+                            <img ng-src="{{stream.preview.template}}" alt="{{stream.game}}" />
+                        </td>
+                        <td>
+                            <p style="font-weight:bold;">{{stream.game}}</p>
+                            <p>Streamer: {{stream.channel.name}}</p>
+                            <p>Viewers: {{stream.viewers}}</p>
+                        </td>
+                    </tr>
+                </table> -->
+            </div>
+        </div>
+    </div>
+</div>

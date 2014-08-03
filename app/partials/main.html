@@ -1,68 +1,58 @@
-<div id="state1" class="col-xs-4 mainContainer draggable windows">
-    <a href="#" style="position:absolute;left:5px;top:2px;color:white;" ng-click="miniMize()"><i class="glyphicon glyphicon-minus"></i></a>
-    <a href="#" style="position:absolute;right:25px;top:2px;color:white;" class="handle"><i class="glyphicon glyphicon-move"></i></a>
-    <a href="#" ng-click="channelStarted = false" style="color:white;padding: 2px;position:absolute;right:0;"><i class="glyphicon glyphicon-remove-circle"></i></a>
+<div>
+    <div id="state1" class="col-sm-12 mainContainer draggable windows">
+        <a href="#" style="position:absolute;left:5px;top:2px;color:white;" ng-click="miniMize()"><i class="glyphicon glyphicon-minus"></i></a>
+        <!-- <a href="#" style="position:absolute;right:25px;top:2px;color:white;" class="handle"><i class="glyphicon glyphicon-move"></i></a> -->
+        <a href="#" ng-click="closeTwitchy()" style="color:white;padding: 2px;position:absolute;right:0;"><i class="glyphicon glyphicon-remove-circle"></i></a>
+        <h4 style="text-align:center;cursor:pointer; color:#B9A3E3;height:40px;" class="handle">Twitchy Wolf</h4>
 
-    <h4 style="text-align:center;cursor:pointer;">Twitchy Wolf</h4>
-    <img src="http://ttv-api.s3.amazonaws.com/assets/connect_dark.png" class="twitch-connect" href="#" />
-    <a class="twitch-logout" href="#">Log out</a>
-    <br />
-    <input type="text" name="streams" ng-change="queryStreams(stream)" ng-model="stream.search" placeholder="Search Streams">
-    <i ng-show="loadingStreams" style="font-size:1.2em" class="fa fa-spinner fa-spin"></i>
-    <div class="" style="max-height: 500px;overflow-y:scroll;">
-        <table class="table" ng-show="streams.length > 0">
-            <tr class="streamSearch" ng-repeat="stream in streams" ng-click="playVideo(stream)">
-                <td>
-                    {{stream.game}}
-                </td>
-                <td>
-                    {{stream.viewers}}
-                </td>
-                <td>
-                    {{stream.channel.name}}
-                </td>
-                <td>
-                    <img ng-src="{{stream.preview.small}}" alt="{{stream.game}}" />
-                </td>
-            </tr>
-        </table>
-    </div>
-    <!-- <div ng-repeat="stream in streams">
-        <p>game: {{stream.game}} viewers: {{stream.viewers}} name: {{stream.channel.display_name}}</p>
-    </div> -->
+        <div id="menu">
 
+            <!-- Menu Header -->
+            <span class="menuHeader" style="position:absolute;top:2px;"><span style="color:#B9A3E3;">{{user.name || 'Log In'}}</span>
+                <span class="menuIcons">
+                    <i class="fa fa-gears pointer" ng-click="viewAccount()"></i>
+                    <span ng-click="login()" class=" twitch-connect">&nbsp;<i class="fa fa-sign-in pointer"></i></span>
+                    <span ng-click="logout()" class=" twitch-logout">&nbsp;<i class="fa fa-sign-out pointer"></i></span>
+                    &nbsp;
+                </span>
+            </span>
 
-    <br>
-    <!-- <input type="TEXT" name="channel" ng-change="queryChannel(channel)" ng-model="channel.name" placeholder="Channel Name">
-    <p>
-        Name: {{channelInfo.stream.channel.display_name}}
-    </p>
-    <p>
-        Game: {{channelInfo.stream.game}}
-    </p>
-    <p>
-        Viewers: {{channelInfo.stream.viewers}}
-    </p>
-    <p>
+            <!-- Button1 -->
+            <span class="menuButton pointer" ng-click="openMyChat()" style="position:absolute;top:34px;">Chat Room</span>
+            <span class="menuButton pointer" ng-click="viewStream()" style="position:absolute;top:66px;">Streams</span>
 
-    </p>
-    <img ng-src="{{channelInfo.stream.preview.medium}}" alt="" /> -->
-
-
-<!-- Chat Room -->
-      <!-- <iframe frameborder="0" scrolling="yes" id="chat_embed" src="http://twitch.tv/chat/embed?channel=sutter_kane&amp;popout_chat=true" height="500" width="350"></iframe> -->
-</div>
-<div ng-show="channelStarted" class="draggable windows streamContainer">
-    <a href="#" style="position:absolute;left:5px;top:1px;color:white;" ng-click="streamCollapse = !streamCollapse"><i class="glyphicon glyphicon-minus"></i></a>
-    <a href="#" style="position:absolute;right:25px;top:1px;color:white;" class="handle"><i class="glyphicon glyphicon-move"></i></a>
-    <a href="#" ng-click="channelStarted = false" style="color:white;padding: 2px;"><i class="glyphicon glyphicon-remove-circle"></i></a>
-
-    <div ng-if="channelStarted">
-        <div collapse="streamCollapse">
-            <stream channel-name="channelName" style="position:absolute;top:20px;left:0;"></stream>
         </div>
+        <br />
+
+        <div ng-if="views.account" id="account" style="position:absolute;top:30px;left:225px;">
+            <p>
+                {{user.name}}
+                <p>
+                    this will be account information
+                </p>
+            </p>
+        </div>
+
+
+        <div ng-if="views.streams" id="streams" style="position:absolute;top:30px;left:225px;overflow-y:scroll">
+            <input type="text" name="streams" class="" ng-change="queryStreams(stream)" ng-model="stream.search" placeholder="Search Streams">
+            <i ng-show="loadingStreams" style="font-size:1.2em" class="fa fa-spinner fa-spin"></i>
+            <br />
+            <br />
+            <div class="col-sm-12">
+                <div  ng-repeat="stream in streams">
+                    <div class="col-sm-6 streamBox">
+                        <img class="col-sm-6 pointer" ng-click="playVideo(stream)" ng-src="{{stream.preview.medium}}" alt="{{stream.game}}" />
+                        <div class="col-sm-6">
+                            <p style="font-weight:bold;">{{stream.game}}</p>
+                            <p>Streamer: {{stream.channel.name}}</p>
+                            <p>Viewers: {{stream.viewers}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
-<!-- <div ng-if="channelStarted" class="draggable windows chatContainer">
-    <a href="#" style="position:absolute;right:25px;top:1px;color:white;" class="handle"><i class="glyphicon glyphicon-move"></i></a>
-</div> -->

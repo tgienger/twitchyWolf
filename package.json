@@ -1,0 +1,14 @@
+{
+    "main":"index.html",
+    "name":"Twitchy Wolf",
+    "description":"Twich utility application",
+    "version":"0.1.0",
+    "window": {
+        "title":"Twitchy Wolf",
+        "icon":"",
+        "toolbar":"false",
+        "frame":"false",
+        "width": 800,
+        "height": 500
+    }
+}

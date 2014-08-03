@@ -1,7 +1,7 @@
-
-<object type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel={{channelName}}" bgcolor="#000000">
-    <param name="allowFullScreen" value="true" />
-    <param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" />
-    <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />
-    <param name="flashvars" value="hostname=www.twitch.tv&channel={{channelName}}&auto_play=true&start_volume=25" />
-</object>
+<div id="streamContainer" style="height: 100%; width: 100%;">
+    <i ng-click="windowClose()" class="fa fa-times streamClose pointer" tooltip="close" tooltip-placement="left"></i>
+    <div style="position:absolute;bottom:2px;right:150px;z-index:100;font-size:1.5em;color:white;" tooltip="open chat" tooltip-placement="top">
+        <i class="fa fa-external-link pointer" ng-click="openChat()"></i>
+    </div>
+    <twitch id="twitch" width="{{stream.width}}" height="{{stream.height}}" channel="{{channelName}}" style="position:absolute;top:0;left:0;z-index:1"></twitch>
+</div>
