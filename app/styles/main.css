@@ -1,0 +1,101 @@
+* {
+    margin:0;
+    padding:0;
+}
+
+.streamSearch {
+    cursor:pointer;
+    color:white;
+}
+.mainContainer {
+    color: white;
+    background: rgba(0,0,0,0.75);
+    border-radius: 5px;
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    overflow-x:none;
+}
+#streams > input {
+    color:black;
+}
+.pointer {
+    cursor:pointer;
+}
+.pointer:hover {
+    color: #B9A3E3;
+}
+.menuHeader, .menuButton {
+    padding-left: 15px;
+    background:#414141;
+    display: block;
+    height: 30px;
+    width: 100%;
+    text-align:left;
+    line-height: 30px;
+    text-decoration:none;
+    color: #e4e8e5;
+}
+#menu {
+    width:200px;
+    background:#1e1e1e;
+    border-right:1px solid black;
+    position:absolute;
+    left:0;
+    top:30px;
+}
+.menuHeader {
+    color:white;
+}
+.menuButton:hover {
+    text-decoration: none;
+    background-color: #6441A5;
+    color: #e4e8e5;
+}
+.menuButton:last-child {
+
+}
+.menuIcons {
+    float:right;
+}
+.streamContainer {
+    text-align:right;
+    background:rgba(0,0,0,0.8);
+    width: 920px;
+    position:relative;
+    border-radius:5px 5px 0 0;
+    height:398px;
+}
+.streamBox {
+    padding:10px;
+    border-radius:5px;
+}
+.streamBox:hover {
+    background:#918b8b;
+    color:black;
+}
+.streamClose {
+    color:rgba(113, 113, 113, 0.43);
+    z-index:5;
+    position:absolute;
+    font-size:1.5em;
+    top:15px;
+    right:5px;
+}
+.streamClose:hover {
+    color:rgba(185, 163, 227, 1);
+}
+.chatContainer {
+    background: rgba(0,0,0,0.8);
+    width: 300px;
+    height: 400px;
+    position:relative;
+    border-radius: 5px;
+}
+.table {
+    -webkit-box-shadow: inset 0px 0px 21px 0px rgba(255, 255, 255, 0.75);
+    -moz-box-shadow:    inset 0px 0px 21px 0px rgba(255, 255, 255, 0.75);
+    box-shadow:         inset 0px 0px 21px 0px rgba(255, 255, 255, 0.75);
+}
